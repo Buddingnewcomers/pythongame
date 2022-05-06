@@ -4,8 +4,8 @@ class Settings:
     def __init__(self):
         """初始化游戏的设置"""
         # 屏幕设置
-        self.screen_width = 800
-        self.screen_height = 600
+        self.screen_width = 1200
+        self.screen_height = 800
         self.bg_color = (255 ,255 , 255) #(255 ,255 , 255)
 
         # 飞船设置
@@ -20,8 +20,8 @@ class Settings:
 
         #外星人参数
         self.alien_speed = 1
-        self.fleet_speed = 10
-
+        self.fleet_drop_speed = 10
+        # Fleet_direction为1表示向右移, 为-1表示向左移
         self.fleet_direction = 1
 
 
