@@ -13,10 +13,14 @@ class Ship(Sprite):
 
         # 加载飞船图像并获取其外接矩阵
         self.image = pygame.image.load('images/ship.png')
+        # self.image = pygame.image.load('images/ship_left.png')
         self.rect = self.image.get_rect()
 
         # 对于飞船,都将其放在屏幕底部的中央.
         self.rect.midbottom = self.screen_rect.midbottom
+
+        # 将飞船放在屏幕左侧
+        # self.rect.midleft = self.screen_rect.midleft
 
         # 在飞船的属性x中存储小数值
         self.x = float(self.rect.x)
@@ -41,6 +45,7 @@ class Ship(Sprite):
         self.screen.blit(self.image, self.rect)
 
     def center_ship(self):
-        """让飞船在屏幕底端居中"""
+        """让飞船在屏幕底端靠左"""
+        # self.rect.midleft = self.screen_rect.midleft
         self.rect.midbottom = self.screen_rect.midbottom
         self.x = float(self.rect.x)

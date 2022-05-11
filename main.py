@@ -10,7 +10,8 @@ from button import Button
 from ship import Ship
 from bullet import Bullet
 from alien import Alien
-
+from star import Star
+from random import randint
 
 class AlienInvasion:
     """"管理游戏资源和行为的类"""
@@ -30,11 +31,12 @@ class AlienInvasion:
         # 创建一个用于存储游戏统计信息的实例
         self.stats = GameStats(self)
         self.sb = Scoreboard(self)
-
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
         self.aliens = pygame.sprite.Group()
-        self._create_fleet()
+        self.stars = pygame.sprite.Group()
+        self._create_fleet_aliens()
+        self._create_fleet_star()
 
         #创建Play按钮
         self.play_button = Button(self, "Play")
@@ -83,7 +85,7 @@ class AlienInvasion:
             self.bullets.empty()
 
             # 创建一群新的外星人并让飞船居中
-            self._create_fleet()
+            self._create_fleet_aliens()
             self.ship.center_ship()
 
             # 隐藏鼠标光标
@@ -140,14 +142,44 @@ class AlienInvasion:
         if len(self.aliens) == 0:
             # 删除现有子弹,创建新的一群外星人
             self.bullets.empty()
-            self._create_fleet()
+            self._create_fleet_aliens()
             self.settings.increase_speed()
 
             # 提高等级
             self.stats.level += 1
             self.sb.prep_level()
 
-    def _create_fleet(self):
+    def _create_fleet_star(self):
+        """创建一颗星星群"""
+        # 创建一颗星星并计算一行课容纳多少星星
+        # 星星的间距为星星的宽度
+        star = Star(self)
+        star_width, star_height = star.rect.size
+        star_width = star.rect.width
+        available_space_x = self.settings.screen_width - (2 * star_width)
+        numbers_star_x = available_space_x // (2 * star_width)
+
+        # 计算屏幕容纳可多少行星星
+        available_space_y = (self.settings.screen_height - star_height)
+        numbers_rows = available_space_y // (2 * star_height)
+
+        # 创建星星群
+        for row_number in range(numbers_rows):
+            for star_number in range(numbers_star_x):
+                self._create_star(star_number, row_number)
+
+    def _create_star(self, star_number, row_number):
+        """创建一颗星星"""
+        star = Star(self)
+        star_width, star_height = star.rect.size
+        star.x = star_width + 2 * star_width * star_number
+        star.rect.x = star.x
+        star.rect.y = star.rect.height + 2 * star.rect.height * row_number
+        star.rect.x -= randint(-100, 100)
+        star.rect.y -= randint(-100, 100)
+        self.stars.add(star)
+
+    def _create_fleet_aliens(self):
         """创建一个外星人群"""
         # 创建一个外星人并计算一行可容纳多少外星人
         # 外星人的间距为外星人的宽度
@@ -157,10 +189,9 @@ class AlienInvasion:
         available_space_x = self.settings.screen_width - (2 * alien_width)
         number_aliens_x = available_space_x // (2 * alien_width)
 
-        # 计算屏幕课容纳多少行外星人
+        # 计算屏幕可容纳多少行外星人
         ship_height = self.ship.rect.height
         available_space_y = (self.settings.screen_height - (6 * alien_height) - ship_height)
-
         number_rows = available_space_y // (2 * alien_height)
 
         # 创建一行外星人
@@ -201,7 +232,7 @@ class AlienInvasion:
             self.bullets.empty()
 
             # 创建一群新的外星人,并将飞船放到屏幕底端的中央
-            self._create_fleet()
+            self._create_fleet_aliens()
             self.ship.center_ship()
 
             # 暂停
@@ -238,7 +269,9 @@ class AlienInvasion:
         self.ship.blitme()
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
+        self.stars.draw(self.screen)
         self.aliens.draw(self.screen)
+
 
         # 显示得分
         self.sb.show_score()

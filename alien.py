@@ -11,7 +11,7 @@ class Alien(Sprite):
         self.settings = ai_game.settings
 
         # 加载图片,并设置rect属性
-        self.image = pygame.image.load('images/monster.png')
+        self.image = pygame.image.load('images/alien.png')
         self.rect = self.image.get_rect()
 
         # 外星人位置为左上角,left = x,top = y
