@@ -238,6 +238,7 @@ class AlienInvasion:
             # 暂停
             sleep(0.5)
         else:
+            self.write_high_score()
             self.stats.game_active = False
             pygame.mouse.set_visible(True)
 
@@ -263,6 +264,11 @@ class AlienInvasion:
                 self._ship_hit()
                 break
 
+    def write_high_score(self):
+        filename = 'high_score.txt'
+        with open(filename, 'a') as f:
+            f.write(str(self.stats.high_score))
+
     def _update_screen(self):
         """更新屏幕上的图像,并切换到新屏幕"""
         self.screen.fill(self.settings.bg_color)
@@ -271,7 +277,6 @@ class AlienInvasion:
             bullet.draw_bullet()
         self.stars.draw(self.screen)
         self.aliens.draw(self.screen)
-
 
         # 显示得分
         self.sb.show_score()
@@ -288,7 +293,6 @@ class AlienInvasion:
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         self.settings.screen_width = self.screen.get_rect().width
         self.settings.screen_height = self.screen.get_rect().height
-
 
 if __name__ == '__main__':
     # 创建游戏实例并运行游戏
