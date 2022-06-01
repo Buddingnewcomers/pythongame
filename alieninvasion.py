@@ -13,6 +13,7 @@ from alien import Alien
 from star import Star
 from random import randint
 
+
 class AlienInvasion:
     """"管理游戏资源和行为的类"""
 
@@ -38,7 +39,7 @@ class AlienInvasion:
         self._create_fleet_aliens()
         self._create_fleet_star()
 
-        #创建Play按钮
+        # 创建Play按钮
         self.play_button = Button(self, "Play")
 
     def run_game(self):
@@ -238,7 +239,7 @@ class AlienInvasion:
             # 暂停
             sleep(0.5)
         else:
-            self.write_high_score()
+            self.get_high_score()
             self.stats.game_active = False
             pygame.mouse.set_visible(True)
 
@@ -265,9 +266,16 @@ class AlienInvasion:
                 break
 
     def write_high_score(self):
+        """将最高得分写入high_score.txt文件中"""
         filename = 'high_score.txt'
         with open(filename, 'a') as f:
-            f.write(str(self.stats.high_score))
+            high_score = str(self.stats.high_score)
+            f.write()
+        return high_score
+
+    def get_high_score(self):
+        str = f'最高分{self.write_high_score()}'
+        return str
 
     def _update_screen(self):
         """更新屏幕上的图像,并切换到新屏幕"""
@@ -293,6 +301,7 @@ class AlienInvasion:
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         self.settings.screen_width = self.screen.get_rect().width
         self.settings.screen_height = self.screen.get_rect().height
+
 
 if __name__ == '__main__':
     # 创建游戏实例并运行游戏

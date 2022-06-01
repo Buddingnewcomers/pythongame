@@ -3,6 +3,7 @@ from pygame.sprite import Group
 
 from ship import Ship
 
+
 class Scoreboard:
     """显示得分信息的类"""
 
@@ -76,5 +77,3 @@ class Scoreboard:
         if self.stats.score > self.stats.high_score:
             self.stats.high_score = self.stats.score
             self.prep_high_score()
-
-

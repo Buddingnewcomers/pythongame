@@ -1,10 +1,11 @@
 import pygame
 from pygame.sprite import Sprite
 
+
 class Alien(Sprite):
     """表示单个怪兽的类"""
 
-    def __init__(self,ai_game):
+    def __init__(self, ai_game):
         """初始话怪兽并设置起始位置"""
         super().__init__()
         self.screen = ai_game.screen

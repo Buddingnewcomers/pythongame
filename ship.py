@@ -41,7 +41,7 @@ class Ship(Sprite):
         self.rect.x = self.x
 
     def blitme(self):
-        """在指定位置绘制梅琳娜."""
+        """在指定位置绘制飞船."""
         self.screen.blit(self.image, self.rect)
 
     def center_ship(self):

@@ -1,10 +1,11 @@
 import pygame
 from pygame.sprite import Sprite
 
+
 class Star(Sprite):
     """表示单个星星的类"""
 
-    def __init__(self,ai_game):
+    def __init__(self, ai_game):
         """初始化星星并设置其起始位置"""
         super().__init__()
         self.screen = ai_game.screen
