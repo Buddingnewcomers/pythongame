@@ -270,7 +270,7 @@ class AlienInvasion:
         filename = 'high_score.txt'
         with open(filename, 'a') as f:
             high_score = str(self.stats.high_score)
-            f.write()
+            f.write(high_score)
         return high_score
 
     def get_high_score(self):
